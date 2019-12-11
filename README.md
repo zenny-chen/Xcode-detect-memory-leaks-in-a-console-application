@@ -37,3 +37,32 @@
 
 <br />
 
+接着，我们打开“终端”（terminal），然后先使用leaks工具检测指定进程的发生内存泄漏的地址。比如，上图中所示的ID进程号为“2295”，因此我们直接在控制台输入：`leaks 2295`即可。然后控制台终端上会打印出许多信息，我们不用怕，直接滚到最上面，直到看到下图所示的信息：
+
+<br />
+
+![4.png](https://github.com/zenny-chen/Xcode-detect-memory-leaks-in-a-console-application/blob/master/4.png)
+
+<br />
+
+上图中，红框框出来的就是发生泄漏的**原始地址**。各位这里要注意的是，leaks工具所给出的是发生泄漏的原先的那个地址，而不是后分配而引发泄漏的那个地址。另外，由于记录内存分配的信息是栈式压入的，因此最上面的地址是最后一个检测到的内存泄漏的原先分配地址；而最下面的则是第一个被检测到的原先分配地址。
+
+最后，我们鼠标右键点击Dock上的“终端”，然后选择“新建窗口”，另外开启一个控制台窗口。然后在这里我们开始使用malloc_history工具来定位内存泄漏所发生的源文件以及行号，如下图所示：
+
+<br />
+
+![5.png](https://github.com/zenny-chen/Xcode-detect-memory-leaks-in-a-console-application/blob/master/5.png)
+
+<br />
+
+这里，malloc_history后面至少需要跟两个参数，第一个是进城ID号，第二个是具体的地址。然后我们就能看到具体的引发当前指定地址内存泄漏的源文件与行号了。
+
+最后这里还需提醒各位，尽管在项目活跃方案的“Diagnostics”中我们看到了运行时的Address Sanitizer选项，但当前的macOS并不支持。
+
+最后再给出一些我参考的文章链接：
+
+1. [Finding Memory Leaks](https://developer.apple.com/library/archive/documentation/Performance/Conceptual/ManagingMemory/Articles/FindingLeaks.html)
+1. [libgmalloc(3) \[osx man page\]](https://www.unix.com/man-page/osx/3/libgmalloc/)
+1. [Using malloc to Debug Memory Misuse in Cocoa](http://www.friday.com/bbum/2010/01/10/using-malloc-to-debug-memory-misuse-in-cocoa/)
+
+
