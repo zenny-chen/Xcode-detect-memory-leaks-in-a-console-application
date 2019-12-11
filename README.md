@@ -13,4 +13,27 @@
 
 首先，我们用Xcode创建一个基于C语言的控制台应用，我这里将项目名起为“MyCTest”，项目工程的编译选项用默认的即可，或者也可以根据自己的喜好进行设定，这个没啥影响。
 
+然后，我们点击左上角的项目名Icon以设置活跃方案（Set the active scheme），如下图所示：
+
+<br />
+
+![1.jpg](https://github.com/zenny-chen/Xcode-detect-memory-leaks-in-a-console-application/blob/master/1.jpg)
+
+<br />
+
+进入到方案界面之后，我们点击最右边的选项卡“Diagnostics”，如果我们要监测内存泄漏，则必须勾选上“**Guard Malloc**”，以及“**Malloc Stack**”，其他可根据自己的需求进行勾选，如下图所示：
+
+<br />
+
+![2.jpg](https://github.com/zenny-chen/Xcode-detect-memory-leaks-in-a-console-application/blob/master/2.jpg)
+
+<br />
+
+完成后点击“Close”按钮退出，我们再进入代码编辑界面，输入以下所示的测试代码。然后在最后`return 0;`语句处设置断点，我们查看打印日志信息，可以看到GuardMalloc工具所打印出来的一些信息。其中，项目名后面的数字即表示当前所运行程序的进程ID。我们在下一步使用leaks工具时需要这个进程ID号，因此这里可以先复制一下。
+
+<br />
+
+![3.png](https://github.com/zenny-chen/Xcode-detect-memory-leaks-in-a-console-application/blob/master/3.png)
+
+<br />
 
